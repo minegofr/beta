@@ -1,0 +1,21 @@
+Economy:
+  PluginTag: "§8[§bMineGO-Economy§8]"
+  PluginTagError: §8[§4MineGO-Economy§8]
+  defaultMoney: 0
+
+  Strings:
+
+    GiveCommand: 
+      ExecuteTaskMessage: <tag> Le joueur <player> a bien reçu <montant> 
+      PlayerRecieveMessage: <tag> Tu as reçu <montant> Crédits de la part de <player> 
+
+    BalanceCommand:
+      PlayerRecieveMessage: <tag> Balance<deuxPoints> <montant> 
+
+  Database:
+    host: localhost
+    dbName: spigotdb
+    tableName: players
+    user: root
+    pwd: root
+    port: 3306

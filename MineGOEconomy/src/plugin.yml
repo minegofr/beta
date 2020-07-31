@@ -1,0 +1,14 @@
+name: MineGoEconomy
+author: Gregoire Alperovitcj
+version: v1.0
+api: null
+
+main: fr.minego.economy.Economy
+
+commands:
+  give:
+    description: Permet de donner une quantite de monnaie a un joueur
+    permission: economy.give
+  balance:
+    description: Permet de voir son nombre de monnaire
+    permission: economy.balance

@@ -100,7 +100,6 @@ public class SQLRequests {
 			q.setString(2, player.getUniqueId().toString());
 			q.executeUpdate();
 			q.close();
-			player.sendMessage("Tu as recu !");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

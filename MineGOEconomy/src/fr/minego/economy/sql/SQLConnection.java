@@ -7,8 +7,6 @@ import java.sql.SQLException;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-import fr.minego.economy.Economy;
-
 public class SQLConnection {
 
 	private Connection connection;
@@ -17,14 +15,18 @@ public class SQLConnection {
 	/*
 	 * Database Logs Informations 
 	 */
-	private final String host = Economy.host;
-	private final String database = Economy.dbName;
-	private final String user = Economy.user;
-	private final String password = Economy.pwd;
-	private final int port = Economy.port;
+	private final String host;
+	private final String database;
+	private final String user;
+	private final String password;
+	private final int port;
 
-	public SQLConnection() {
-
+	public SQLConnection(String host, String database, String user, String password, int port) {
+		this.host = host;
+		this.database = database;
+		this.user = user;
+		this.password = password;
+		this.port = port;
 	}
 
 	/**

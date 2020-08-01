@@ -7,7 +7,11 @@ Economy:
 
     GiveCommand: 
       ExecuteTaskMessage: <tag> Le joueur <player> a bien reçu <montant> 
-      PlayerRecieveMessage: <tag> Tu as reçu <montant> Crédits de la part de <player> 
+      PlayerRecieveMessage: <tag> Tu as reçu <montant> Crédits de la part de <player>
+
+    RemoveCommand:
+      ExecuteTaskMessage: "<tag> Le joueur <player> a etait crediter de <montant>"
+      PlayerRecieveMessage: "<tag> Tu as etait crediter de <montant>"
 
     BalanceCommand:
       PlayerRecieveMessage: <tag> Balance<deuxPoints> <montant> 

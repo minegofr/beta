@@ -1,6 +1,5 @@
 package fr.minego.economy.sql;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,8 +9,7 @@ import org.bukkit.entity.Player;
 import fr.minego.economy.Economy;
 
 public class SQLRequests {
-	
-	Connection connection = new SQLConnection().connection();
+
 
 	/**
 	 * Execute method when player is joining the server Create a line in DB
@@ -24,7 +22,7 @@ public class SQLRequests {
 		// Check if player is already log in DB
 		if (!hasAccount(player)) {
 			try {
-				PreparedStatement q = connection
+				PreparedStatement q = Economy.sqlConnection.connection()
 						.prepareStatement("INSERT INTO " + Economy.tableName + " (uid, name, money) VALUES (?, ?, ?)");
 				q.setString(1, player.getUniqueId().toString());
 				q.setString(2, player.getName());
@@ -47,7 +45,7 @@ public class SQLRequests {
 	 */
 	public boolean hasAccount(Player player) {
 		try {
-			PreparedStatement q = connection.prepareStatement("SELECT uid from " + Economy.tableName + " WHERE uid = ?");
+			PreparedStatement q = Economy.sqlConnection.connection().prepareStatement("SELECT uid from " + Economy.tableName + " WHERE uid = ?");
 			q.setString(1, player.getUniqueId().toString());
 			ResultSet rs = q.executeQuery();
 			boolean hasAccount = rs.next();
@@ -67,7 +65,7 @@ public class SQLRequests {
 	 */
 	public int getBalance(Player player) {
 		try {
-			PreparedStatement q = connection.prepareStatement("SELECT money from " + Economy.tableName + " WHERE uid = ?");
+			PreparedStatement q = Economy.sqlConnection.connection().prepareStatement("SELECT money from " + Economy.tableName + " WHERE uid = ?");
 			q.setString(1, player.getUniqueId().toString());
 			int money = 0;
 			ResultSet rs = q.executeQuery();
@@ -87,7 +85,7 @@ public class SQLRequests {
 
 	/**
 	 * Execute method when op player wants to give money to someone 
-	 * Execute when executing /give <player> <amount>
+	 * Execute when executing /money give <player> <amount>
 	 * 
 	 * @param Player to give money
 	 * @param Amount of money to give
@@ -95,7 +93,7 @@ public class SQLRequests {
 	 */
 	public void giveMoney(Player player, int amount) {
 		try {
-			PreparedStatement q = connection.prepareStatement("UPDATE " + Economy.tableName + " SET money = ? WHERE uid = ?");
+			PreparedStatement q = Economy.sqlConnection.connection().prepareStatement("UPDATE " + Economy.tableName + " SET money = ? WHERE uid = ?");
 			q.setInt(1, getBalance(player) + amount);
 			q.setString(2, player.getUniqueId().toString());
 			q.executeUpdate();
@@ -104,4 +102,38 @@ public class SQLRequests {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Execute method when op player wants to remove money to someone 
+	 * Execute when executing /money remove <player> <amount>
+	 * 
+	 * @param Player to remove money
+	 * @param Amount of money to remove
+	 * @return void
+	 */
+	public void removeMoney(Player player, int amount) {
+		
+		if(getBalance(player) - amount > 0) {
+			try {
+				PreparedStatement q = Economy.sqlConnection.connection().prepareStatement("UPDATE " + Economy.tableName + " SET money = ? WHERE uid = ?");
+				q.setInt(1, getBalance(player) - amount);
+				q.setString(2, player.getUniqueId().toString());
+				q.executeUpdate();
+				q.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				PreparedStatement q = Economy.sqlConnection.connection().prepareStatement("UPDATE " + Economy.tableName + " SET money = ? WHERE uid = ?");
+				q.setInt(1, 0);
+				q.setString(2, player.getUniqueId().toString());
+				q.executeUpdate();
+				q.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 }

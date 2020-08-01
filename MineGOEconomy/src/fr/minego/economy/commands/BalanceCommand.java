@@ -25,9 +25,11 @@ public class BalanceCommand implements CommandExecutor {
 			 */
 			try {
 				int balance = sqlRequests.getBalance(player);
-				player.sendMessage(Economy.playerRecieveMessage2.replace("<tag>", Economy.pluginTag).replace("<deuxPoints>", ":").replace("<player>", player.getName()).replace("<montant>", balance+""));
+				player.sendMessage(Economy.playerRecieveMessage2.replace("&", "§").replace("<tag>", Economy.pluginTag).replace("<deuxPoints>", ":").replace("<player>", player.getName()).replace("<montant>", balance+""));
 			} catch (Exception e) {
 				e.printStackTrace();
+				sender.sendMessage("§cUne erreure c'est produite lors de l'execution de la commande.");
+				return false;
 			}
 
 		}

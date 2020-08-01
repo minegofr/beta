@@ -6,9 +6,9 @@ api: null
 main: fr.minego.economy.Economy
 
 commands:
-  give:
-    description: Permet de donner une quantite de monnaie a un joueur
+  money:
+    description: Permet les interactions avec la monnaie
     permission: economy.give
   balance:
-    description: Permet de voir son nombre de monnaire
+    description: Permet de voir son nombre de monnaie
     permission: economy.balance
